@@ -1037,10 +1037,16 @@ transform: translateX(calc(-200px * 4 - 100px * 4)); /* move by half (4 logos + 
     font-size: 2.5rem;
   }
 
-  .item {
-    font-size: 2.2rem;
-    padding: 15px 30px;
-  }
+  
+    .item {
+      font-size: 2rem;              /* Reduced from 2.2rem */
+      padding: 15px 30px;
+      white-space: normal;          /* Allow natural wrapping */
+      text-align: left;             /* Ensure left alignment */
+      word-break: break-word;       /* Break long words nicely */
+    }
+  
+  
 
   .right-section {
     max-width: 100%;
