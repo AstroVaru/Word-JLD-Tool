@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<style>
+
+.Bottom-container {
+  display: flex;    
+  height: 100vh;
+  /* background:radial-gradient(circle 500px at center, rgba(93, 57, 118, 0.353) 0%, rgba(42, 27, 59, 0.249) 70%, transparent 100%),#000;   */
+  background:radial-gradient(circle 250px at center, rgba(59, 14, 90, 0.558) 0%, rgba(53, 23, 85, 0.36) 30%, transparent 70%),
+  #000;
+}
+
+.left-section {
+  font-family: 'Arial', sans-serif;
+
+  margin-left:30px;
+  flex: 1;
+  padding: 80px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+}
+
+.industries-tag {
+  background: rgba(139, 69, 255, 0.2);
+  border: 1px solid rgba(139, 69, 255, 0.3);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: #ffffff;
+  width: fit-content;
+  margin-bottom: 40px;
+  backdrop-filter: blur(10px);
+}
+
+.Sub-Headings {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, #ffffff, #e0e0e0);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.left-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #b0b0b0;
+  margin-bottom: 30px;
+  max-width: 500px;
+}
+
+.growth-text {
+  font-size: 1rem;
+  color: #9090a0;
+  margin-bottom: 40px;
+  max-width: 400px;
+}
+
+.cta-button {
+  background: linear-gradient(135deg, #8b45ff, #6c35cc);
+  border: none;
+  padding: 18px 36px;
+  border-radius: 12px;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(139, 69, 255, 0.3);
+  width: fit-content;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(139, 69, 255, 0.4);
+  background: linear-gradient(135deg, #9955ff, #7d3fd9);
+}
+.right-section {
+  font-family: 'Arial', sans-serif;
+
+  flex: 1;
+  max-width: 60%;
+  padding: 30px;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  box-sizing: border-box;
+  transform: translateX(-30px); /* shift to left subtly */
+}
+
+
+.scrolling-container {
+  height: 500px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+}
+
+.scrolling-list {
+  animation: scroll 20s linear infinite;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.item {
+  font-size: 3rem;
+  font-weight: 700;
+  padding: 20px 60px;
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 0.3s ease;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.highlight {
+  color: white !important;
+}
+
+.mid-dim {
+  color: rgba(255, 255, 255, 0.31) !important;
+}
+
+@media (max-width: 768px) {
+  .Bottom-container {
+    flex-direction: column;
+  }
+
+  .left-section {
+    padding: 40px 30px;
+  }
+
+  .Sub-Headings {
+    font-size: 2.5rem;
+  }
+
+  .item {
+    font-size: 2.2rem;
+    padding: 15px 30px;
+  }
+}
+
+
+</style>
+</head>
+<body>
+    
+
+<div class="Bottom-container">
+    <div class="left-section">
+      <div class="industries-tag">Solutions</div>
+      <h1 class="Sub-Headings">We help<br>businesses connect</h1>
+      <p class="left-description">
+        Our technology is highly scalable, leveraging decades of expertise in customer communications, business process automation, and mail solutions across diverse industries worldwide.
+      </p>
+     
+      <p style="color: #9090a0; margin-bottom: 40px;">Ready to transform your customer experience?</p>
+      <button class="cta-button">Get started</button>
+    </div>
+  
+    <div class="right-section">
+      <div class="scrolling-container">
+        <div class="scrolling-list" id="scrollList">
+          <!-- Original list -->
+          <div class="item">Auto Style Deduplication</div>
+          <div class="item">Multi-Page Layout Parsing</div>
+          <div class="item">JSON Output Optimization</div>
+          <div class="item">Batch Processing</div>
+          <div class="item">Error-Free JLD Generation</div>
+          <div class="item">Smart Style Matching</div>
+          <!-- Cloned list for loop -->
+          <div class="item">Auto Style Deduplication</div>
+          <div class="item">Multi-Page Layout Parsing</div>
+          <div class="item">JSON Output Optimization</div>
+          <div class="item">Batch Processing</div>
+          <div class="item">Error-Free JLD Generation</div>
+          <div class="item">Smart Style Matching</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+
+function updateHighlights() {
+  const container = document.querySelector('.scrolling-container');
+  const items = container.querySelectorAll('.item');
+  const midPoint = container.getBoundingClientRect().top + container.offsetHeight / 2;
+
+  let distances = [];
+
+  items.forEach(item => {
+    const itemCenter = item.getBoundingClientRect().top + item.offsetHeight / 2;
+    const distance = Math.abs(midPoint - itemCenter);
+    distances.push({ item, distance });
+  });
+
+  distances.sort((a, b) => a.distance - b.distance);
+
+  // Reset all styles
+  items.forEach(i => {
+    i.classList.remove('highlight', 'mid-dim');
+    i.style.color = 'rgba(255,255,255,0.3)';
+  });
+
+  // Apply highlight and mid-dim
+  if (distances[0]) distances[0].item.classList.add('highlight');
+  if (distances[1]) distances[1].item.classList.add('highlight');
+  if (distances[2]) distances[2].item.classList.add('mid-dim');
+  if (distances[3]) distances[3].item.classList.add('mid-dim');
+}
+
+setInterval(updateHighlights, 100);
+window.addEventListener('load', updateHighlights);
+
+
+  </script>
+</body>
+</html>

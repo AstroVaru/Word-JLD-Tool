@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smooth Industry Scroll</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(to right, #0f0f23, #1a1a2e);
+      font-family: Arial, sans-serif;
+      color: white;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scrolling-container {
+      height: 500px;
+      overflow: hidden;
+      position: relative;
+      width: 400px;
+      mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+    }
+
+    .scrolling-list {
+      animation: scroll 20s linear infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    @keyframes scroll {
+      0% {
+        transform: translateY(0%);
+      }
+      100% {
+        transform: translateY(-50%);
+      }
+    }
+
+    .item {
+      font-size: 3rem;
+      font-weight: 700;
+      padding: 20px 30px;
+      color: rgba(255,255,255,0.3);
+      transition: color 0.3s ease;
+      text-align: left;
+    }
+
+    .highlight {
+      color: white !important;
+    }
+
+    .mid-dim {
+      color: rgba(255,255,255,0.6) !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scrolling-container">
+    <div class="scrolling-list" id="scrollList">
+      <!-- Original list -->
+      <div class="item">Auto Style Deduplication</div>
+      <div class="item">Multi-Page Layout Parsing</div>
+      <div class="item">JSON Output Optimization</div>
+      <div class="item">Batch Processing</div>
+      <div class="item">Error-Free JLD Generation</div>
+      <div class="item">Smart Style Matching</div>
+      <!-- Cloned list for loop -->
+      <div class="item">Auto Style Deduplication</div>
+      <div class="item">Multi-Page Layout Parsing</div>
+      <div class="item">JSON Output Optimization</div>
+      <div class="item">Batch Processing</div>
+      <div class="item">Error-Free JLD Generation</div>
+      <div class="item">Smart Style Matching</div>
+    </div>
+  </div>
+
+  <script>
+    function updateHighlights() {
+      const container = document.querySelector('.scrolling-container');
+      const items = container.querySelectorAll('.item');
+      const midPoint = container.getBoundingClientRect().top + container.offsetHeight / 2;
+
+      let closest = [], distances = [];
+
+      items.forEach(item => {
+        const itemCenter = item.getBoundingClientRect().top + item.offsetHeight / 2;
+        const distance = Math.abs(midPoint - itemCenter);
+        distances.push({ item, distance });
+      });
+
+      distances.sort((a, b) => a.distance - b.distance);
+
+      items.forEach(i => {
+        i.classList.remove('highlight', 'mid-dim');
+        i.style.color = 'rgba(255,255,255,0.3)';
+      });
+
+      if (distances[0]) distances[0].item.classList.add('highlight');
+      if (distances[1]) distances[1].item.classList.add('highlight');
+      if (distances[2]) distances[2].item.classList.add('mid-dim');
+      if (distances[3]) distances[3].item.classList.add('mid-dim');
+    }
+
+    setInterval(updateHighlights, 100);
+    window.addEventListener('load', updateHighlights);
+  </script>
+</body>
+</html>

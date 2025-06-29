@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocuEngine - Modern Enterprise Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: white;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated background */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            z-index: -2;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Floating orbs */
+        .floating-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #8b5cf6, #3b82f6);
+            filter: blur(1px);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: -150px;
+            opacity: 0.1;
+            animation-delay: 0s;
+        }
+
+        .orb:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            right: -100px;
+            opacity: 0.15;
+            animation-delay: -3s;
+        }
+
+        .orb:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            bottom: 20%;
+            left: 20%;
+            opacity: 0.1;
+            animation-delay: -6s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(120deg); }
+            66% { transform: translateY(15px) rotate(240deg); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #8b5cf6;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #8b5cf6, #3b82f6);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Main content */
+        main {
+            padding-top: 120px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .hero-title .static-text {
+            color: white;
+        }
+
+        .typewriter-container {
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+        .typewriter-text {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa, #c4b5fd, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .typewriter-text::after {
+            content: '|';
+            color: #8b5cf6;
+            animation: blink 1s infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 900px;
+            margin-bottom: 4rem;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Feature cards with glassmorphism */
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .feature-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(139, 92, 246, 0.1);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Center logo with modern styling */
+        .center-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 4rem 0;
+            position: relative;
+        }
+
+        .center-logo {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            position: relative;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .center-logo:hover {
+            transform: scale(1.1) rotate(5deg);
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 20px 50px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Connection lines with animation */
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(139, 92, 246, 0.5), rgba(59, 130, 246, 0.5));
+            border-radius: 1px;
+        }
+
+        .line-left {
+            left: -200px;
+            top: 50%;
+            width: 180px;
+            animation: drawLine 2s ease-in-out infinite alternate;
+        }
+
+        .line-right {
+            right: -200px;
+            top: 50%;
+            width: 180px;
+            animation: drawLine 2s ease-in-out infinite alternate-reverse;
+        }
+
+        .line-top {
+            top: -100px;
+            left: 50%;
+            width: 2px;
+            height: 80px;
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.5), rgba(59, 130, 246, 0.5));
+            animation: drawLineVertical 2s ease-in-out infinite alternate;
+        }
+
+        .line-bottom {
+            bottom: -100px;
+            left: 50%;
+            width: 2px;
+            height: 80px;
+            background: linear-gradient(0deg, rgba(139, 92, 246, 0.5), rgba(59, 130, 246, 0.5));
+            animation: drawLineVertical 2s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes drawLine {
+            0% { transform: scaleX(0.8); opacity: 0.5; }
+            100% { transform: scaleX(1); opacity: 1; }
+        }
+
+        @keyframes drawLineVertical {
+            0% { transform: scaleY(0.8); opacity: 0.5; }
+            100% { transform: scaleY(1); opacity: 1; }
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .features-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .features-container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            .hero-title {
+                text-align: center;
+            }
+
+            .typewriter-container {
+                display: block;
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+
+            .connection-line {
+                display: none;
+            }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background -->
+    <div class="bg-grid"></div>
+    <div class="floating-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">ALPHA</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#docs">Docs</a></li>
+                <li><a href="#support">Support</a></li>
+            </ul>
+            <a href="#" class="cta-button">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main>
+        <h1 class="hero-title">
+            <span class="static-text">DocuEngine Powers</span>
+            <div class="typewriter-container">
+                <span class="typewriter-text" id="typewriter"></span>
+            </div>
+        </h1>
+
+        <p class="hero-description">
+            DocuEngine intelligently extracts styles from your existing documents, automatically generating XML files that preserve formatting integrity. Our advanced system then creates comprehensive JSON Layout Definition files, enabling seamless integration with your existing business applications and content management systems.
+        </p>
+
+        <!-- Features Grid -->
+        <div class="features-container">
+            <!-- Left Column -->
+            <div class="feature-column">
+                <div class="feature-card">
+                    <h3>Multi Channel Delivery</h3>
+                </div>
+                <div class="feature-card">
+                    <h3>Cloud & On Premise</h3>
+                </div>
+                <div class="feature-card">
+                    <h3>Data Integration Hub</h3>
+                </div>
+                <div class="feature-card">
+                    <h3>Inspire Automation</h3>
+                </div>
+            </div>
+
+            <!-- Center Section -->
+            <div class="center-section">
+                <div class="center-logo">
+                    ALFA
+                    <div class="connection-line line-left"></div>
+                    <div class="connection-line line-right"></div>
+                    <div class="connection-line line-top"></div>
+                    <div class="connection-line line-bottom"></div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="feature-column">
+                <div class="feature-card">
+                    <h3>Hyper Personalization</h3>
+                </div>
+                <div class="feature-card">
+                    <h3>Unified Customer View</h3>
+                </div>
+                <div class="feature-card">
+                    <h3>Templates Library</h3>
+                </div>
+                <div class="feature-card">
+                    <h3>Multi Language Support</h3>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="scroll-indicator">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 16l-6-6h12l-6 6z"/>
+        </svg>
+    </div>
+
+    <script>
+        // Typewriter effect
+        const words = [
+            'Enterprise Growth',
+            'Digital Transformation',
+            'Business Intelligence',
+            'Document Automation',
+            'Workflow Efficiency',
+            'Data Analytics'
+        ];
+
+        let currentWordIndex = 0;
+        let currentCharIndex = 0;
+        let isDeleting = false;
+        const typewriterElement = document.getElementById('typewriter');
+        
+        const typeSpeed = 100;
+        const deleteSpeed = 50;
+        const pauseAfterWord = 1500;
+        const pauseAfterDelete = 300;
+
+        function typeWriter() {
+            const currentWord = words[currentWordIndex];
+            
+            if (!isDeleting) {
+                if (currentCharIndex < currentWord.length) {
+                    typewriterElement.textContent = currentWord.substring(0, currentCharIndex + 1);
+                    currentCharIndex++;
+                    setTimeout(typeWriter, typeSpeed);
+                } else {
+                    setTimeout(() => {
+                        isDeleting = true;
+                        typeWriter();
+                    }, pauseAfterWord);
+                }
+            } else {
+                if (currentCharIndex > 0) {
+                    typewriterElement.textContent = currentWord.substring(0, currentCharIndex - 1);
+                    currentCharIndex--;
+                    setTimeout(typeWriter, deleteSpeed);
+                } else {
+                    isDeleting = false;
+                    currentWordIndex = (currentWordIndex + 1) % words.length;
+                    setTimeout(typeWriter, pauseAfterDelete);
+                }
+            }
+        }
+
+        // Start typewriter effect
+        setTimeout(typeWriter, 1000);
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+                nav.style.borderBottom = '1px solid rgba(139, 92, 246, 0.3)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 10, 0.8)';
+                nav.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+            }
+        });
+
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
